@@ -13,25 +13,23 @@ A decision-analysis app for working through big life decisions — the kind with
 
 ## Project structure
 
-src/
-├── app/ # router, providers (auth/query), layouts
-├── components/ui/ # shared primitives (Button, Input, Label)
-├── features/
-│ ├── auth/ # sign in / sign up
-│ ├── dashboard/ # scenario list
-│ └── scenario/ # everything scenario-related: options, current
-│ # situation, constraints, priorities, timeline,
-│ # reflections, versioning, AI analysis
-├── lib/
-│ ├── supabase/ # client singleton
-│ └── utils/ # cn() helper
-└── stores/ # global Zustand stores (auth session)
+**`src/app/`** — router, providers (auth/query), layouts
 
-supabase/
-└── functions/
-└── generate-analysis/ # Edge Function: builds a prompt from scenario
+**`src/components/ui/`** — shared primitives (Button, Input, Label)
 
-# context, calls OpenRouter, stores the result
+**`src/features/auth/`** — sign in / sign up
+
+**`src/features/dashboard/`** — scenario list
+
+**`src/features/scenario/`** — everything scenario-related: options, current situation, constraints, priorities, timeline, reflections, versioning, AI analysis
+
+**`src/lib/supabase/`** — client singleton
+
+**`src/lib/utils/`** — `cn()` helper
+
+**`src/stores/`** — global Zustand stores (auth session)
+
+**`supabase/functions/generate-analysis/`** — Edge Function that builds a prompt from scenario context, calls OpenRouter, and stores the result
 
 Each feature under `features/scenario/` follows the same shape: `api/` (Supabase queries), `hooks/` (TanStack Query wrappers), `components/`, `types/`.
 
@@ -49,32 +47,35 @@ Full schema and RLS policies live in Supabase (see the SQL run during setup — 
 
 1. **Install dependencies**
 
-```bash
-   npm install
-```
+   `npm install`
 
 2. **Environment variables** — copy `.env.example` to `.env.local` and fill in your Supabase project's URL and publishable (anon) key:
-   VITE_SUPABASE_URL=https://your-project.supabase.co
-   VITE_SUPABASE_ANON_KEY=your-anon-key
+
+   `VITE_SUPABASE_URL=https://your-project.supabase.co`
+
+   `VITE_SUPABASE_ANON_KEY=your-anon-key`
 
 3. **Database** — run the schema SQL in the Supabase SQL Editor (tables: `profiles`, `scenarios`, `scenario_versions`, `options`, `option_analysis`, `scenario_reflections`, all with RLS enabled).
 
 4. **Edge Function (AI analysis)** — requires the Supabase CLI:
 
-```bash
-   npx supabase login
-   npx supabase link --project-ref YOUR_PROJECT_REF
-   npx supabase secrets set OPENROUTER_API_KEY=sk-or-v1-xxxxx
-   npx supabase functions deploy generate-analysis
-```
+   `npx supabase login`
 
-The OpenRouter key lives server-side only — it's never exposed to the browser.
+   `npx supabase link --project-ref YOUR_PROJECT_REF`
+
+   `npx supabase secrets set OPENROUTER_API_KEY=sk-or-v1-xxxxx`
+
+   `npx supabase functions deploy generate-analysis`
+
+   The OpenRouter key lives server-side only — it's never exposed to the browser.
 
 5. **Run the dev server**
 
-```bash
-   npm run dev
-```
+   `npm run dev`
+
+## Deployment
+
+Deployed on Vercel. Requires `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` set as environment variables in the Vercel project settings, and a `vercel.json` SPA rewrite rule so client-side routes don't 404 on refresh.
 
 ## Scripts
 
