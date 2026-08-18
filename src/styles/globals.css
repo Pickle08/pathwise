@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 140 12% 97%;
+        --foreground: 210 32% 12%;
+        --primary: 168 55% 22%;
+        --primary-foreground: 0 0% 100%;
+        --muted: 140 10% 93%;
+        --muted-foreground: 210 12% 42%;
+        --border: 140 10% 86%;
+        --radius: 0.5rem;
+    }
+
+    .dark {
+        --background: 210 32% 9%;
+        --foreground: 140 10% 95%;
+        --primary: 168 45% 55%;
+        --primary-foreground: 210 32% 9%;
+        --muted: 210 20% 16%;
+        --muted-foreground: 140 8% 65%;
+        --border: 210 20% 20%;
+    }
+
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground font-body;
+        overflow-x: hidden;
+    }
+}
