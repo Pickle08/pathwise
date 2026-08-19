@@ -13,8 +13,6 @@ A decision-analysis app for working through big life decisions — the kind with
 
 ## Project structure
 
-## Project structure
-
 **`src/app/`** — router, providers (auth/query), layouts
 
 **`src/components/ui/`** — shared primitives (Button, Input, Label)
@@ -37,9 +35,6 @@ Each feature under `features/scenario/` follows the same shape: `api/` (Supabase
 
 ## Data model (high level)
 
-
-## Data model (high level)
-
 - `scenarios` — lean, queryable metadata (title, visibility, owner)
 - `scenario_versions` — immutable snapshots (goal, situation, constraints, priorities, timeline). Everyday edits happen in-place on the latest version; a new version is only created deliberately, alongside a reflection.
 - `options` — user-authored, stable, not versioned
@@ -52,32 +47,35 @@ Full schema and RLS policies live in Supabase (see the SQL run during setup — 
 
 1. **Install dependencies**
 
-```bash
-   npm install
-```
+   `npm install`
 
 2. **Environment variables** — copy `.env.example` to `.env.local` and fill in your Supabase project's URL and publishable (anon) key:
-   VITE_SUPABASE_URL=https://your-project.supabase.co
-   VITE_SUPABASE_ANON_KEY=your-anon-key
+
+   `VITE_SUPABASE_URL=https://your-project.supabase.co`
+
+   `VITE_SUPABASE_ANON_KEY=your-anon-key`
 
 3. **Database** — run the schema SQL in the Supabase SQL Editor (tables: `profiles`, `scenarios`, `scenario_versions`, `options`, `option_analysis`, `scenario_reflections`, all with RLS enabled).
 
 4. **Edge Function (AI analysis)** — requires the Supabase CLI:
 
-```bash
-   npx supabase login
-   npx supabase link --project-ref YOUR_PROJECT_REF
-   npx supabase secrets set OPENROUTER_API_KEY=sk-or-v1-xxxxx
-   npx supabase functions deploy generate-analysis
-```
+   `npx supabase login`
 
-The OpenRouter key lives server-side only — it's never exposed to the browser.
+   `npx supabase link --project-ref YOUR_PROJECT_REF`
+
+   `npx supabase secrets set OPENROUTER_API_KEY=sk-or-v1-xxxxx`
+
+   `npx supabase functions deploy generate-analysis`
+
+   The OpenRouter key lives server-side only — it's never exposed to the browser.
 
 5. **Run the dev server**
 
-```bash
-   npm run dev
-```
+   `npm run dev`
+
+## Deployment
+
+Deployed on Vercel. Requires `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` set as environment variables in the Vercel project settings, and a `vercel.json` SPA rewrite rule so client-side routes don't 404 on refresh.
 
 ## Scripts
 
