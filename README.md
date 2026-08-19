@@ -13,27 +13,30 @@ A decision-analysis app for working through big life decisions — the kind with
 
 ## Project structure
 
-src/
-├── app/ # router, providers (auth/query), layouts
-├── components/ui/ # shared primitives (Button, Input, Label)
-├── features/
-│ ├── auth/ # sign in / sign up
-│ ├── dashboard/ # scenario list
-│ └── scenario/ # everything scenario-related: options, current
-│ # situation, constraints, priorities, timeline,
-│ # reflections, versioning, AI analysis
-├── lib/
-│ ├── supabase/ # client singleton
-│ └── utils/ # cn() helper
-└── stores/ # global Zustand stores (auth session)
+## Project structure
 
-supabase/
-└── functions/
-└── generate-analysis/ # Edge Function: builds a prompt from scenario
+**`src/app/`** — router, providers (auth/query), layouts
 
-# context, calls OpenRouter, stores the result
+**`src/components/ui/`** — shared primitives (Button, Input, Label)
+
+**`src/features/auth/`** — sign in / sign up
+
+**`src/features/dashboard/`** — scenario list
+
+**`src/features/scenario/`** — everything scenario-related: options, current situation, constraints, priorities, timeline, reflections, versioning, AI analysis
+
+**`src/lib/supabase/`** — client singleton
+
+**`src/lib/utils/`** — `cn()` helper
+
+**`src/stores/`** — global Zustand stores (auth session)
+
+**`supabase/functions/generate-analysis/`** — Edge Function that builds a prompt from scenario context, calls OpenRouter, and stores the result
 
 Each feature under `features/scenario/` follows the same shape: `api/` (Supabase queries), `hooks/` (TanStack Query wrappers), `components/`, `types/`.
+
+## Data model (high level)
+
 
 ## Data model (high level)
 
